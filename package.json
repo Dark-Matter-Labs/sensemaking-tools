@@ -4,6 +4,7 @@
   "description": "",
   "main": "library/dist/src/index.js",
   "types": "library/dist/src/index.d.ts",
+  "private": true,
   "scripts": {
     "test": "npm run test:ts && npm run test:py",
     "test:ts": "NODE_NO_WARNINGS=1 TFJS_NODE_GPU=false jest",
@@ -42,7 +43,7 @@
     "ts-jest": "^29.2.5",
     "typedoc": "^0.26.10",
     "typescript": "^5.5.4",
-    "typescript-eslint": "^8.16.0"
+    "typescript-eslint": "^8.24.1"
   },
   "dependencies": {
     "@google-cloud/vertexai": "^1.10.0",

@@ -48,9 +48,16 @@ export class VertexModel extends Model {
    */
   constructor(project: string, location: string, modelName: string = "gemini-2.0-flash-lite") {
     super();
+    if (modelName === "gemini-2.5-pro-preview-06-05" && location != "global") {
+      throw Error(
+        "Only the 'global' location is supported for the 'gemini-2.5-pro-preview-06-05' model. See " +
+          "https://cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/2-5-pro for more information."
+      );
+    }
     this.vertexAI = new VertexAI({
       project: project,
       location: location,
+      apiEndpoint: "aiplatform.googleapis.com",
     });
     this.modelName = modelName;
 
@@ -62,7 +69,7 @@ export class VertexModel extends Model {
    * Get generative model corresponding to structured data output specification as a JSON Schema specification.
    */
   getGenerativeModel(schema?: TSchema): GenerativeModel {
-    const requestOptions: RequestOptions = { timeout: 150000 }; // 2.5 min (overrides current default of 5 mins)
+    const requestOptions: RequestOptions = { timeout: 150000 * 4 }; // 10 min (overrides current default of 5 mins)
     return this.vertexAI.getGenerativeModel(getModelParams(this.modelName, schema), requestOptions);
   }
 
